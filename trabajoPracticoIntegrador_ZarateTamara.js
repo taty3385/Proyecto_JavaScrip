@@ -71,7 +71,7 @@ const libros = [
     autor: "Milan Kundera",
     anio: 1984,
     genero: "Ficción",
-    disponible: true,
+    disponible: false,
   },
   {
     id: 8,
@@ -233,14 +233,109 @@ const usuarios = [
 
 // console.log(buscarUsuario("lucas23@gmail.com"));
 
-const borrarUsuario = (nombre, email) => {
-  for (let i = 0; i < usuarios.length; i++) {
-    if (usuarios[i].nombre === nombre && usuarios[i].email === email) {
-      usuarios.splice(i, 1);
-      return `El usuario con nombre ${nombre} y email ${email} ha sido eliminado`;
+// const borrarUsuario = (nombre, email) => {
+//   for (let i = 0; i < usuarios.length; i++) {
+//     if (usuarios[i].nombre === nombre && usuarios[i].email === email) {
+//       usuarios.splice(i, 1);
+//       return `El usuario con nombre ${nombre} y email ${email} ha sido eliminado`;
+//     }
+//   }
+//   return "Su usuario no se encuentra";
+// };
+// console.log(borrarUsuario("Lucas", "lucas23@gmail.com"));
+// console.log(usuarios);
+
+// 4. Sistema de Préstamos
+// a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque
+// un libro como no disponible y lo agregue a la lista de libros prestados
+// del usuario.
+// b) Implementar una función devolverLibro(idLibro, idUsuario) que
+// marque un libro como disponible y lo elimine de la lista de libros
+// prestados del usuario
+
+const prestarLibro = (idLibro, idUsuario) => {
+  for (let i = 0; i < libros.length; i++) {
+    if (libros[i].id === idLibro) {
+      libros[i].disponible = false;
+      for (let j = 0; j < usuarios.length; j++) {
+        if (usuarios[j].id === idUsuario) {
+          usuarios[j].librosPrestados.push(libros[i].titulo);
+          return `El libro ${libros[i].titulo} ha sido prestado a ${usuarios[j].nombre}`;
+        }
+      }
     }
   }
-  return "Su usuario no se encuentra";
+  return "No se encontró el libro o el usuario";
 };
-console.log(borrarUsuario("Lucas", "lucas23@gmail.com"));
-console.log(usuarios);
+console.log(prestarLibro(1, 1));
+console.log(usuarios[0]);
+
+const devolverLibro = (idLibro, idUsuario) => {
+  for (let i = 0; i < libros.length; i++) {
+    if (libros[i].id === idLibro) {
+      libros[i].disponible === true;
+      for (let j = 0; j < usuarios.length; j++) {
+        if (usuarios[j].id === idUsuario) {
+          const posicion = usuarios[j].librosPrestados.indexOf(
+            libros[j].titulo
+          );
+          if (posicion !== -1) { 
+            usuarios[j].librosPrestados.splice(posicion, 1)
+            return `El libro "${libros[i].titulo}" ha sido devuelto por el usuario ${usuarios[j].nombre}.`
+          }
+        }
+      }
+    }
+  }
+  return "No se encontró el libro o el usuario."
+};
+console.log(devolverLibro(1, 1));
+console.log(usuarios); 
+
+
+// 5. Reportes
+// a) Crear una función generarReporteLibros() que utilice métodos
+// avanzados de arrays (.map(), .filter(), .reduce()) para generar un
+// reporte con la siguiente información:
+// ✓ Cantidad total de libros.
+// ✓ Cantidad de libros prestados.
+// ✓ Cantidad de libros por género.
+// ✓ Libro más antiguo y más nuevo
+
+
+
+// 6. Identificación Avanzada de libros
+// a) Implementar una función librosConPalabrasEnTitulo() que identifique
+// y muestre todos los libros cuyo título contiene más de una palabra
+// (no títulos que contengan números ni otros caracteres).
+// b) La función debe devolver un array con los títulos de esos libros y
+// mostrarlo en la consola.
+
+// 7. Cálculos Estadísticos
+// a) Desarrollar una función calcularEstadisticas() que utilice el objeto
+// Math para calcular y mostrar:
+// ✓ Promedio de años de publicación de los libros.
+// ✓ Año de publicación más frecuente.
+// ✓ Diferencia en años entre el libro más antiguo y el más nuevo.
+
+// 8. Manejo de Cadenas
+// a) Crear una función normalizarDatos() que utilice métodos de strings
+// para:
+// ✓ Convertir todos los títulos a mayúsculas.
+// ✓ Eliminar espacios en blanco al inicio y final de los nombres de
+// autores.
+// ✓ Formatear los emails de los usuarios a minúsculas.
+
+// 9. Interfaz de Usuario por Consola
+// a) Implementar una función menuPrincipal() que muestre un menú de
+// opciones al usuario y permita interactuar con el sistema utilizando
+// prompt().
+// b) El menú debe incluir opciones para todas las funcionalidades
+// anteriores y utilizar estructuras de control (if, switch, ciclos) para
+// manejar la lógica.
+
+// 10. Comentando mi código
+// a) Se tomará como último punto a evaluar la correcta utilización de
+// comentarios explicando paso por paso su código.
+// b) Deberán seccionar el código punto por punto y con una explicación
+// corta y simple de que hicieron en cada punto.//
