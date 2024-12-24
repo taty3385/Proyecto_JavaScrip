@@ -30,7 +30,7 @@ const libros = [
     titulo: "El amor en los tiempos del cólera",
     autor: "Gabriel García Márquez",
     anio: 1985,
-    genero: "Ficción",
+    genero: "Clasico",
     disponible: false,
   },
   {
@@ -38,7 +38,7 @@ const libros = [
     titulo: "El túnel",
     autor: "Ernesto Sábato",
     anio: 1948,
-    genero: "Ficción",
+    genero: "Terror",
     disponible: true,
   },
   {
@@ -54,7 +54,7 @@ const libros = [
     titulo: "Cien años de soledad",
     autor: "Gabriel García Márquez",
     anio: 1967,
-    genero: "Ficción",
+    genero: "Terror",
     disponible: true,
   },
   {
@@ -70,7 +70,7 @@ const libros = [
     titulo: "La insoportable levedad del ser",
     autor: "Milan Kundera",
     anio: 1984,
-    genero: "Ficción",
+    genero: "Comedia",
     disponible: false,
   },
   {
@@ -78,7 +78,7 @@ const libros = [
     titulo: "El lobo estepario",
     autor: "Hermann Hesse",
     anio: 1927,
-    genero: "Ficción",
+    genero: "Comedia",
     disponible: true,
   },
   {
@@ -94,8 +94,8 @@ const libros = [
     titulo: "1984",
     autor: "George Orwell",
     anio: 1949,
-    genero: "Ficción",
-    disponible: true,
+    genero: "Comedia",
+    disponible: false,
   },
 ];
 
@@ -253,44 +253,44 @@ const usuarios = [
 // marque un libro como disponible y lo elimine de la lista de libros
 // prestados del usuario
 
-const prestarLibro = (idLibro, idUsuario) => {
-  for (let i = 0; i < libros.length; i++) {
-    if (libros[i].id === idLibro) {
-      libros[i].disponible = false;
-      for (let j = 0; j < usuarios.length; j++) {
-        if (usuarios[j].id === idUsuario) {
-          usuarios[j].librosPrestados.push(libros[i].titulo);
-          return `El libro ${libros[i].titulo} ha sido prestado a ${usuarios[j].nombre}`;
-        }
-      }
-    }
-  }
-  return "No se encontró el libro o el usuario";
-};
-console.log(prestarLibro(1, 1));
-console.log(usuarios[0]);
+// const prestarLibro = (idLibro, idUsuario) => {
+//   for (let i = 0; i < libros.length; i++) {
+//     if (libros[i].id === idLibro) {
+//       libros[i].disponible = false;
+//       for (let j = 0; j < usuarios.length; j++) {
+//         if (usuarios[j].id === idUsuario) {
+//           usuarios[j].librosPrestados.push(libros[i].titulo);
+//           return `El libro ${libros[i].titulo} ha sido prestado a ${usuarios[j].nombre}`;
+//         }
+//       }
+//     }
+//   }
+//   return "No se encontró el libro o el usuario";
+// };
+// console.log(prestarLibro(1, 1));
+// console.log(usuarios[0]);
 
-const devolverLibro = (idLibro, idUsuario) => {
-  for (let i = 0; i < libros.length; i++) {
-    if (libros[i].id === idLibro) {
-      libros[i].disponible === true;
-      for (let j = 0; j < usuarios.length; j++) {
-        if (usuarios[j].id === idUsuario) {
-          const posicion = usuarios[j].librosPrestados.indexOf(
-            libros[j].titulo
-          );
-          if (posicion !== -1) { 
-            usuarios[j].librosPrestados.splice(posicion, 1)
-            return `El libro "${libros[i].titulo}" ha sido devuelto por el usuario ${usuarios[j].nombre}.`
-          }
-        }
-      }
-    }
-  }
-  return "No se encontró el libro o el usuario."
-};
-console.log(devolverLibro(1, 1));
-console.log(usuarios); 
+// const devolverLibro = (idLibro, idUsuario) => {
+//   for (let i = 0; i < libros.length; i++) {
+//     if (libros[i].id === idLibro) {
+//       libros[i].disponible === true;
+//       for (let j = 0; j < usuarios.length; j++) {
+//         if (usuarios[j].id === idUsuario) {
+//           const posicion = usuarios[j].librosPrestados.indexOf(
+//             libros[j].titulo
+//           );
+//           if (posicion !== -1) { 
+//             usuarios[j].librosPrestados.splice(posicion, 1)
+//             return `El libro "${libros[i].titulo}" ha sido devuelto por el usuario ${usuarios[j].nombre}.`
+//           }
+//         }
+//       }
+//     }
+//   }
+//   return "No se encontró el libro o el usuario."
+// };
+// console.log(devolverLibro(1, 1));
+// console.log(usuarios); 
 
 
 // 5. Reportes
@@ -301,9 +301,54 @@ console.log(usuarios);
 // ✓ Cantidad de libros prestados.
 // ✓ Cantidad de libros por género.
 // ✓ Libro más antiguo y más nuevo
+ 
+const generarReporteLibros=()=>{
+  // total de libros
+  const totalLibros= libros.length
+  console.log(totalLibros);
+  // libros prestados
+  const librosPrestados = libros.filter(libro => libro.disponible === false); 
+  const cantDeLibrosPrestados = librosPrestados.length;
 
+ console.log(cantDeLibrosPrestados);
+// libros por genero
+ const librosPorGénero=libros.reduce((acum , libro)=>{
+  const genero = libro.genero;
+    if(!acum[genero]){
+      acum[genero]=0
+    }
+    acum[genero]++
+    return acum
+ 
+ },{})
 
+//  Libro más antiguo y más nuevo
+const libroMasAntiguo = libros.reduce((acum, libro) => {
+  if (libro.anio < acum.anio) {
+    return libro;
+  }
+  return acum;
+}, libros[0]);
 
+const libroMasNuevo = libros.reduce((acum, libro) => {
+  if (libro.anio > acum.anio) {
+    return libro;
+  }
+  return acum;
+}, libros[0]);
+
+const reporte = {
+  totalLibros:totalLibros,
+  librosPrestados: cantDeLibrosPrestados,
+  librosPorGénero: librosPorGénero,
+  libroMasAntiguo: libroMasAntiguo,
+  libroMasNuevo: libroMasNuevo,
+}
+return reporte
+}
+
+ console.log(generarReporteLibros());
+  
 // 6. Identificación Avanzada de libros
 // a) Implementar una función librosConPalabrasEnTitulo() que identifique
 // y muestre todos los libros cuyo título contiene más de una palabra
@@ -311,12 +356,39 @@ console.log(usuarios);
 // b) La función debe devolver un array con los títulos de esos libros y
 // mostrarlo en la consola.
 
+const librosConPalabrasEnTitulo=(libros)=> {
+
+  const titulos = libros
+      .map(libro => libro.titulo)
+      .filter(titulo => {
+          const palabras = titulo.split(' ');
+         
+          return palabras.length > 1 && palabras.every(palabra => {
+              for (let i = 0; i < palabra.length; i++) {
+                  const char = palabra[i];
+                  if (!(char >= 'A' && char <= 'Z') && !(char >= 'a' && char <= 'z')) { // si no es una letra del alfabeto (mayúscula o minúscula)
+                      return false; // no es una palabra válida
+                  }
+              }
+              return true; // es una palabra válida
+          });
+      });
+
+
+  console.log(titulos);
+
+  return titulos;
+}
+librosConPalabrasEnTitulo(libros);
 // 7. Cálculos Estadísticos
 // a) Desarrollar una función calcularEstadisticas() que utilice el objeto
 // Math para calcular y mostrar:
 // ✓ Promedio de años de publicación de los libros.
 // ✓ Año de publicación más frecuente.
 // ✓ Diferencia en años entre el libro más antiguo y el más nuevo.
+
+
+
 
 // 8. Manejo de Cadenas
 // a) Crear una función normalizarDatos() que utilice métodos de strings
