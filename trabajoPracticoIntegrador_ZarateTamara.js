@@ -279,7 +279,7 @@ const usuarios = [
 //           const posicion = usuarios[j].librosPrestados.indexOf(
 //             libros[j].titulo
 //           );
-//           if (posicion !== -1) { 
+//           if (posicion !== -1) {
 //             usuarios[j].librosPrestados.splice(posicion, 1)
 //             return `El libro "${libros[i].titulo}" ha sido devuelto por el usuario ${usuarios[j].nombre}.`
 //           }
@@ -290,8 +290,7 @@ const usuarios = [
 //   return "No se encontró el libro o el usuario."
 // };
 // console.log(devolverLibro(1, 1));
-// console.log(usuarios); 
-
+// console.log(usuarios);
 
 // 5. Reportes
 // a) Crear una función generarReporteLibros() que utilice métodos
@@ -301,54 +300,53 @@ const usuarios = [
 // ✓ Cantidad de libros prestados.
 // ✓ Cantidad de libros por género.
 // ✓ Libro más antiguo y más nuevo
- 
-const generarReporteLibros=()=>{
+
+const generarReporteLibros = () => {
   // total de libros
-  const totalLibros= libros.length
+  const totalLibros = libros.length; // Cantidad total de libros
   console.log(totalLibros);
   // libros prestados
-  const librosPrestados = libros.filter(libro => libro.disponible === false); 
-  const cantDeLibrosPrestados = librosPrestados.length;
+  const librosPrestados = libros.filter((libro) => libro.disponible === false);// Obtengo los libros prestados
+  const cantDeLibrosPrestados = librosPrestados.length; // Cantidad de libros prestados
 
- console.log(cantDeLibrosPrestados);
-// libros por genero
- const librosPorGénero=libros.reduce((acum , libro)=>{
-  const genero = libro.genero;
-    if(!acum[genero]){
-      acum[genero]=0
+  console.log(cantDeLibrosPrestados);
+  // libros por genero
+  const librosPorGénero = libros.reduce((acum, libro) => { // Obtengo la cantidad de libros por género
+    const genero = libro.genero;
+    if (!acum[genero]) { // Si el género no existe en el objeto acumulador, lo inicializo en 0
+      acum[genero] = 0;
     }
-    acum[genero]++
-    return acum
- 
- },{})
+    acum[genero]++; // Incremento la cantidad de libros del género
+    return acum;
+  }, {});
 
-//  Libro más antiguo y más nuevo
-const libroMasAntiguo = libros.reduce((acum, libro) => {
-  if (libro.anio < acum.anio) {
-    return libro;
-  }
-  return acum;
-}, libros[0]);
+  //  Libro más antiguo y más nuevo
+  const libroMasAntiguo = libros.reduce((acum, libro) => { // Obtengo el libro más antiguo
+    if (libro.anio < acum.anio) { // Si el año de publicación del libro es menor al año de publicación del acumulador, lo reemplazo
+      return libro; // Si no, mantengo el acumulador                              
+    }
+    return acum; // Devuelvo el libro más antiguo
+  }, libros[0]);// Inicializo el acumulador con el primer libro del array
 
-const libroMasNuevo = libros.reduce((acum, libro) => {
-  if (libro.anio > acum.anio) {
-    return libro;
-  }
-  return acum;
-}, libros[0]);
+  const libroMasNuevo = libros.reduce((acum, libro) => { // Obtengo el libro más nuevo
+    if (libro.anio > acum.anio) { // Si el año de publicación del libro es mayor al año de publicación del acumulador, lo reemplazo
+      return libro; // Si no, mantengo el acumulador
+    }
+    return acum; // Devuelvo el libro más nuevo
+  }, libros[0]);
 
-const reporte = {
-  totalLibros:totalLibros,
-  librosPrestados: cantDeLibrosPrestados,
-  librosPorGénero: librosPorGénero,
-  libroMasAntiguo: libroMasAntiguo,
-  libroMasNuevo: libroMasNuevo,
-}
-return reporte
-}
+  const reporte = {
+    totalLibros: totalLibros,
+    librosPrestados: cantDeLibrosPrestados,
+    librosPorGénero: librosPorGénero,
+    libroMasAntiguo: libroMasAntiguo,
+    libroMasNuevo: libroMasNuevo,
+  };
+  return reporte;
+};
 
- console.log(generarReporteLibros());
-  
+console.log(generarReporteLibros());
+
 // 6. Identificación Avanzada de libros
 // a) Implementar una función librosConPalabrasEnTitulo() que identifique
 // y muestre todos los libros cuyo título contiene más de una palabra
@@ -356,30 +354,39 @@ return reporte
 // b) La función debe devolver un array con los títulos de esos libros y
 // mostrarlo en la consola.
 
-const librosConPalabrasEnTitulo=(libros)=> {
+const librosConPalabrasEnTitulo = (libros) => {
+  const titulos = libros // Obtengo los títulos de los libros
+    .map((libro) => libro.titulo)
+    .filter((titulo) => { // Filtro los títulos que contienen más de una palabra
+      const palabras = titulo.split(" "); // Separo el título en palabras
 
-  const titulos = libros
-      .map(libro => libro.titulo)
-      .filter(titulo => {
-          const palabras = titulo.split(' ');
-         
-          return palabras.length > 1 && palabras.every(palabra => {
-              for (let i = 0; i < palabra.length; i++) {
-                  const char = palabra[i];
-                  if (!(char >= 'A' && char <= 'Z') && !(char >= 'a' && char <= 'z')) { // si no es una letra del alfabeto (mayúscula o minúscula)
-                      return false; // no es una palabra válida
-                  }
-              }
-              return true; // es una palabra válida
-          });
-      });
+      if (palabras.length <= 1) {
+        return false; // Si el título no contiene más de una palabra, lo excluyo
+      }
 
+      for (let i = 0; i < palabras.length; i++) {
+        const palabra = palabras[i];
+        for (let j = 0; j < palabra.length; j++) {
+          const char = palabra[j];
+          if (!(char >= "A" && char <= "Z") && !(char >= "a" && char <= "z")) {
+            return false; // Si alguna palabra contiene caracteres no válidos, lo excluyo
+          }
+        }
+      }
+
+      return true; // Si todas las palabras son válidas, incluyo el título
+    });
 
   console.log(titulos);
 
   return titulos;
-}
+};
+
+
+
 librosConPalabrasEnTitulo(libros);
+
+
 // 7. Cálculos Estadísticos
 // a) Desarrollar una función calcularEstadisticas() que utilice el objeto
 // Math para calcular y mostrar:
@@ -387,8 +394,46 @@ librosConPalabrasEnTitulo(libros);
 // ✓ Año de publicación más frecuente.
 // ✓ Diferencia en años entre el libro más antiguo y el más nuevo.
 
+const calcularEstadisticas = (libros) => {
+
+  const promedioAnios = libros.reduce((acum, libro) => acum + libro.anio, 0) / libros.length; //Utilizo el reduce para sumar los años de publicacion y luego lo divido por los libros  
+  console.log(`Promedio de años de publicación: ${promedioAnios}`);
+
+  const frecuenciaAnios = {};    // Inicializar un objeto para contar la frecuencia de cada año de publicación
+  let anioMasFrecuente = null;  // Inicializar variables para almacenar el año de publicación más frecuente y su frecuencia
+  let maxFrecuencia = 0;       // Inicializar variables para almacenar el año de publicación más frecuente y su frecuencia
+ 
+  libros.forEach((libro) => { // Iterar sobre los libros para contar la frecuencia de cada año de publicación
+    const anio = libro.anio; // Obtener el año de publicación del libro
+    if (frecuenciaAnios[anio]) { // si el año ya existe en el objeto de frecuencia de años
+      frecuenciaAnios[anio]++; // Incrementar la frecuencia
+    } else { // si el año no existe en el objeto de frecuencia de años
+      frecuenciaAnios[anio] = 1; // Inicializar la frecuencia en 1
+    }
+    if (frecuenciaAnios[anio] > maxFrecuencia) { // Actualizo el año de publicación más frecuente si es necesario
+      maxFrecuencia = frecuenciaAnios[anio]; // Actualizo la frecuencia máxima
+      anioMasFrecuente = anio; // Actualizo el año de publicación más frecuente
+    }
+  });
+  console.log(`Año de publicación más frecuente: ${anioMasFrecuente}`);
+
+ 
+  const anios = libros.map((libro) => libro.anio); // Creo un array con los años de publicación de los libros
+  const anioMasAntiguo = Math.min(...anios); // Obtener el año de publicación más antiguo
+  const anioMasNuevo = Math.max(...anios); // Obtener el año de publicación más nuevo
+  const diferenciaAnios = anioMasNuevo - anioMasAntiguo; // Calcular la diferencia en años entre el libro más antiguo y el más nuevo
+  console.log(`Diferencia en años entre el libro más antiguo y el más nuevo: ${diferenciaAnios}`);
+
+  return {
+    promedioAnios,
+    anioMasFrecuente,
+    diferenciaAnios,
+  };
+};
 
 
+
+calcularEstadisticas(libros);
 
 // 8. Manejo de Cadenas
 // a) Crear una función normalizarDatos() que utilice métodos de strings
@@ -397,6 +442,9 @@ librosConPalabrasEnTitulo(libros);
 // ✓ Eliminar espacios en blanco al inicio y final de los nombres de
 // autores.
 // ✓ Formatear los emails de los usuarios a minúsculas.
+
+
+
 
 // 9. Interfaz de Usuario por Consola
 // a) Implementar una función menuPrincipal() que muestre un menú de
