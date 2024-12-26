@@ -146,59 +146,59 @@ const usuarios = [
 // d) Desarrollar una función borrarLibro(id) que elimine el libro que se le
 // pase por parámetro.
 
-// const agregarLibro = (id, titulo, autor, anio, genero, disponible) => {
-//   libros.push({ id, titulo, autor, anio, genero, disponible });
-//   return libros;
-// };
+const agregarLibro = (id, titulo, autor, anio, genero, disponible) => { // Agregar un libro al array de libros
+  libros.push({ id, titulo, autor, anio, genero, disponible }); // Agregar un nuevo libro al array de libros
+  return libros; // Devolver el array de libros actualizado
+};
 
-// console.log(
-//   agregarLibro(
-//     11,
-//     "El amor en los tiempos del cólera",
-//     "Gabriel García Márquez",
-//     1985,
-//     "Ficción",
-//     false
-//   )
-// );
+console.log(
+  agregarLibro(
+    11,
+    "El amor en los tiempos del cólera",
+    "Gabriel García Márquez",
+    1985,
+    "Ficción",
+    false
+  )
+);
 
-// const buscarLibro = (criterio, valor) => {
-//   for (let i = 0; i < libros.length; i++) {
-//     if (libros[i][criterio] === valor) {
-//       return libros[i];
-//     }
-//   }
-//   console.log("no hay resultado en su búsqueda");
-// };
+const buscarLibro = (criterio, valor) => {
+  for (let i = 0; i < libros.length; i++) { // Recorrer el array de libros
+    if (libros[i][criterio] === valor) { // Si coincide con el valor de búsqueda
+      return libros[i]; // Devolver el libro
+    }
+  }
+  return"no hay resultado en su búsqueda"; // Si no se encuentra el libro, devolver un mensaje
+};
 
-// console.log(buscarLibro("autor", "Julio Cortázar"));
+console.log(buscarLibro("autor", "Julio Cortázar"));
 
-// const ordenarLibros = (criterio) => {
-//   for (let i = 0; i < libros.length; i++) {
-//     for (let j = 0; j < libros.length - 1; j++) {
-//       if (libros[j][criterio] > libros[j + 1][criterio]) {
-//         let librosTemp = libros[j];
-//         libros[j] = libros[j + 1];
-//         libros[j + 1] = librosTemp;
-//       }
-//     }
-//   }
-// };
-// ordenarLibros('titulo');
-// console.log(libros);
+const ordenarLibros = (criterio) => { 
+  for (let i = 0; i < libros.length; i++) { // Recorrer el array de libros
+    for (let j = 0; j < libros.length - 1; j++) { // comparo los libros
+      if (libros[j][criterio] > libros[j + 1][criterio]) { // Si el libro actual es mayor al siguiente
+        let librosTemp = libros[j]; // Intercambiar los libros
+        libros[j] = libros[j + 1]; // asigno el libro siguiente al actual
+        libros[j + 1] = librosTemp; 
+      }
+    }
+  }
+};
+ordenarLibros('titulo');
+console.log(libros);
 
-// const borrarLibro = (id) => {
-//   for (let i = 0; i < libros.length; i++) {
-//     if (libros[i].id === id) {
-//       libros.splice(i, 1);
-//       return `Tu libro con id ${id} ha sido eliminado`;
-//     }
-//   }
-//   return "No se encontró ningún libro con ese id.";
-// };
+const borrarLibro = (id) => {
+  for (let i = 0; i < libros.length; i++) { // Recorrer el array de libros
+    if (libros[i].id === id) { // Si el id coincide con el libro
+      libros.splice(i, 1); // Eliminar el libro
+      return `Tu libro con id ${id} ha sido eliminado`; // Devolver un mensaje
+    }
+  }
+  return "No se encontró ningún libro con ese id."; // Si no se encuentra el libro, devolver un mensaje
+};
 
-// console.log(borrarLibro(1));
-// console.log(libros);
+console.log(borrarLibro(1));
+console.log(libros);
 
 // 3. Gestión de Usuarios
 
@@ -211,39 +211,39 @@ const usuarios = [
 // d) Implementar una función borrarUsuario(nombre, email) que elimine el
 // usuario seleccionado.
 
-//  const registrarUsuario=(nombre, email)=>{
-//   usuarios.push( {nombre , email})
-//   return usuarios
-//  }
-//  console.log(registrarUsuario("tamara", "tatyy661@gmail.com"));
+ const registrarUsuario=(nombre, email)=>{
+  usuarios.push( {nombre , email}) // Agrego un nuevo usuario al array de usuarios
+  return usuarios // Devuelvo el array de usuarios actualizado
+ }
+ console.log(registrarUsuario("tamara", "tatyy661@gmail.com"));
 
-//  const  mostrarTodosLosUsuarios=()=> usuarios
+ const  mostrarTodosLosUsuarios=()=> usuarios // Devuelvo el array de usuarios
 
-//  console.log(mostrarTodosLosUsuarios());
+ console.log(mostrarTodosLosUsuarios());
 
-// const buscarUsuario=(email)=>{
-//   for (let i = 0; i < usuarios.length; i++) {
-//    if (usuarios[i].email === email) {
-//     return usuarios[i]
-//    }
+const buscarUsuario=(email)=>{
+  for (let i = 0; i < usuarios.length; i++) { // Recorrer el array de usuarios
+   if (usuarios[i].email === email) { // Si el email coincide con el usuario
+    return usuarios[i] // Devolver el usuario
+   }
 
-//   }
-//   return "usuario no encontrado"
-// }
+  }
+  return "usuario no encontrado" // Si no se encuentra el usuario, devolver un mensaje
+}
 
-// console.log(buscarUsuario("lucas23@gmail.com"));
+console.log(buscarUsuario("lucas23@gmail.com"));
 
-// const borrarUsuario = (nombre, email) => {
-//   for (let i = 0; i < usuarios.length; i++) {
-//     if (usuarios[i].nombre === nombre && usuarios[i].email === email) {
-//       usuarios.splice(i, 1);
-//       return `El usuario con nombre ${nombre} y email ${email} ha sido eliminado`;
-//     }
-//   }
-//   return "Su usuario no se encuentra";
-// };
-// console.log(borrarUsuario("Lucas", "lucas23@gmail.com"));
-// console.log(usuarios);
+const borrarUsuario = (nombre, email) => {
+  for (let i = 0; i < usuarios.length; i++) { // Recorrer el array de usuarios
+    if (usuarios[i].nombre === nombre && usuarios[i].email === email) { // Si el nombre y el email coinciden con el usuario
+      usuarios.splice(i, 1); // Eliminar el usuario
+      return `El usuario con nombre ${nombre} y email ${email} ha sido eliminado`; // Devolver un mensaje
+    }
+  }
+  return "Su usuario no se encuentra"; // Si no se encuentra el usuario, devolver un mensaje
+};
+console.log(borrarUsuario("Lucas", "lucas23@gmail.com"));
+console.log(usuarios);
 
 // 4. Sistema de Préstamos
 // a) Desarrollar una función prestarLibro(idLibro, idUsuario) que marque
@@ -253,44 +253,44 @@ const usuarios = [
 // marque un libro como disponible y lo elimine de la lista de libros
 // prestados del usuario
 
-// const prestarLibro = (idLibro, idUsuario) => {
-//   for (let i = 0; i < libros.length; i++) {
-//     if (libros[i].id === idLibro) {
-//       libros[i].disponible = false;
-//       for (let j = 0; j < usuarios.length; j++) {
-//         if (usuarios[j].id === idUsuario) {
-//           usuarios[j].librosPrestados.push(libros[i].titulo);
-//           return `El libro ${libros[i].titulo} ha sido prestado a ${usuarios[j].nombre}`;
-//         }
-//       }
-//     }
-//   }
-//   return "No se encontró el libro o el usuario";
-// };
-// console.log(prestarLibro(1, 1));
-// console.log(usuarios[0]);
+const prestarLibro = (idLibro, idUsuario) => {
+  for (let i = 0; i < libros.length; i++) { // Recorrer el array de libros
+    if (libros[i].id === idLibro) { // Si el id coincide con el libro
+      libros[i].disponible = false; // Marcar el libro como no disponible
+      for (let j = 0; j < usuarios.length; j++) { // Recorrer el array de usuarios
+        if (usuarios[j].id === idUsuario) { // Si el id coincide con el usuario
+          usuarios[j].librosPrestados.push(libros[i].titulo); // Agregar el libro a la lista de libros prestados del usuario
+          return `El libro ${libros[i].titulo} ha sido prestado a ${usuarios[j].nombre}`; // Devolver un mensaje
+        }
+      }
+    }
+  }
+  return "No se encontró el libro o el usuario"; // Si no se encuentra el libro o el usuario, devolver un mensaje
+};
+console.log(prestarLibro(1, 1));
+console.log(usuarios[0]);
 
-// const devolverLibro = (idLibro, idUsuario) => {
-//   for (let i = 0; i < libros.length; i++) {
-//     if (libros[i].id === idLibro) {
-//       libros[i].disponible === true;
-//       for (let j = 0; j < usuarios.length; j++) {
-//         if (usuarios[j].id === idUsuario) {
-//           const posicion = usuarios[j].librosPrestados.indexOf(
-//             libros[j].titulo
-//           );
-//           if (posicion !== -1) {
-//             usuarios[j].librosPrestados.splice(posicion, 1)
-//             return `El libro "${libros[i].titulo}" ha sido devuelto por el usuario ${usuarios[j].nombre}.`
-//           }
-//         }
-//       }
-//     }
-//   }
-//   return "No se encontró el libro o el usuario."
-// };
-// console.log(devolverLibro(1, 1));
-// console.log(usuarios);
+const devolverLibro = (idLibro, idUsuario) => {
+  for (let i = 0; i < libros.length; i++) { // Recorrer el array de libros
+    if (libros[i].id === idLibro) { // Si el id coincide con el libro
+      libros[i].disponible === true; // Marcar el libro como disponible
+      for (let j = 0; j < usuarios.length; j++) { // Recorrer el array de usuarios}
+        if (usuarios[j].id === idUsuario) { // Si el id coincide con el usuario
+          const posicion = usuarios[j].librosPrestados.indexOf(
+            libros[j].titulo // Busca la posición del libro en la lista de libros prestados del usuario
+          );
+          if (posicion !== -1) { // Si el libro está en la lista de libros prestados
+            usuarios[j].librosPrestados.splice(posicion, 1) // Elimina el libro de la lista de libros prestados del usuario
+            return `El libro "${libros[i].titulo}" ha sido devuelto por el usuario ${usuarios[j].nombre}.`// Devolver un mensaje
+          }
+        }
+      }
+    }
+  }
+  return "No se encontró el libro o el usuario." // Si no se encuentra el libro o el usuario, devolver un mensaje
+};
+console.log(devolverLibro(1, 1));
+console.log(usuarios);
 
 // 5. Reportes
 // a) Crear una función generarReporteLibros() que utilice métodos
@@ -443,7 +443,20 @@ calcularEstadisticas(libros);
 // autores.
 // ✓ Formatear los emails de los usuarios a minúsculas.
 
+ const normalizarDatos=()=>{
+  libros.forEach((libro) => { // Iterar sobre los libros
+    libro.titulo = libro.titulo.toUpperCase(); // Convertir el título a mayúsculas
+    libro.autor = libro.autor.trim(); // Eliminar espacios en blanco al inicio y final del nombre del autor
+  });
 
+  usuarios.forEach((usuario) => { // Iterar sobre los usuarios
+    usuario.email = usuario.email.toLowerCase(); // Convertir el email a minúsculas
+  });
+
+  console.log(libros);
+  console.log(usuarios);
+ }
+ normalizarDatos()
 
 
 // 9. Interfaz de Usuario por Consola
